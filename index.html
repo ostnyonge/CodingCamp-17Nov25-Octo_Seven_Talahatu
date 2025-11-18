@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website | Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo"> <img src="assets/logo_revoU.png">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Our Profile</a></li>
+                <li><a href="#portfolio">Portofolio</a></li>
+                <li><a href="#message">Message Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <section id="home" class="hero-section">
+                <h1>Hi, <span id="userName"></span>Welcome To Website</h1>
+                <p>Ini adalah website latihan pertama</p>
+            </section>
+            <div class="placeholder-image">
+                <p>1366 x 570</p>
+            </div>
+        </section>
+
+        <section id="message" class="message-section">
+            <h2>Message Us</h2>
+            <div class="form-container">
+
+                <form id="messageForm">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" name="nama" placeholder="Nama" required>
+
+                    <label for="tanggalLahir">Tanggal Lahir</label>
+                    <input type="date" id="tanggalLahir" name="tanggalLahir" value="2025-11-17" required>
+
+                    <label for="jenisKelamin">Jenis Kelamin</label>
+                    <div class="radio-group">
+                        <input type="radio" id="lakiLaki" name="jenisKelamin" value="Laki-Laki">
+                        <label for="lakiLaki">Laki-Laki</label>
+                        <input type="radio" id="perempuan" name="jenisKelamin" value="Perempuan">
+                        <label for="perempuan">Perempuan</label>
+                    </div>
+
+                    <label for="pesan">Pesan</label>
+                    <textarea id="pesan" name="pesan" placeholder="Pesan" required></textarea>
+
+                    <button type="submit">Submit</button>
+                    <p id="validationError" class="error-message"></p>
+                </form>
+
+                <div class="output-box">
+                    <br>
+                    <div id="currentTime"></div>
+                    <div id="outputDisplay">
+                        <p>Data hasil submit akan ditampilkan di sini.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created By RevoU</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
