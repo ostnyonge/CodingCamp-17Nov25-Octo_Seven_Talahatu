@@ -102,14 +102,21 @@ section:hover {
     margin-bottom: 5px;
 }
 
-.placeholder-image {
-    height: 400px;
-    background: linear-gradient(135deg, var(--color-navy), #3a539b);
-    color: white;
-    font-size: 1.8em;
-    font-weight: 700;
-    border-radius: 6px;
+.banner-container {
+    width: 100%;
+    max-height: 400px; 
+    overflow: hidden;
+    margin-top: 30px;
+    border-radius: 8px;
     box-shadow: var(--shadow-medium);
+}
+
+.banner-container img {
+    width: 100%;
+    height: 100%;
+    object-fit:contain; 
+    
+    transition: transform 0.3s ease; 
 }
 
 .headquarter-section h2 {
@@ -262,10 +269,17 @@ footer {
     #messageForm input,
     #messageForm textarea,
     #messageForm button,
+
     .radio-group {
         grid-column: 1 / -1;
         width: 100%;
         box-sizing: border-box;
+    }
+
+    .radio-group {
+        flex-direction: column; /* Tumpuk radio button */
+        gap: 5px;
+        align-self: flex-start;
     }
 
     .vision-mission {
