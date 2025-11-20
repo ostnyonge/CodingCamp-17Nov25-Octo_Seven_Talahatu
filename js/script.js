@@ -1,42 +1,71 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-    // --- Inisialisasi Elemen ---
+    // --- FITUR BARU: Smooth Scroll dengan JavaScript ---
+    // Menggunakan selector yang lebih andal untuk menargetkan semua tautan di navbar yang href-nya dimulai dengan '#'
+    const navLinks = document.querySelectorAll('.navbar ul li a[href^="#"]'); 
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah lompatan tiba-tiba
+
+            const targetId = this.getAttribute('href').substring(1); 
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth', 
+                    block: 'start'      
+                });
+            }
+        });
+    });
+
+    // --- Inisialisasi Elemen Formulir dan Lainnya ---
     const userNameElement = document.getElementById('userName');
     const formNamaInput = document.getElementById('nama');
     
     if (userNameElement) {
-        userNameElement.textContent = ""; 
+        // Tampilkan placeholder jika input nama kosong
+        userNameElement.textContent = formNamaInput && formNamaInput.value.trim() ? formNamaInput.value.trim() + " " : "Guest "; 
+    }
 
-        if (formNamaInput) {
-             formNamaInput.value = ""; 
-        }
+    if (formNamaInput) {
+        formNamaInput.addEventListener('input', function() {
+            if (userNameElement) {
+                userNameElement.textContent = this.value.trim() ? this.value.trim() + " " : "Guest ";
+            }
+        });
     }
 
 
-    // --- Validasi dan Menampilkan Nilai Form ---
+    // --- Logic untuk Current Time ---
+    const currentTimeElement = document.getElementById('currentTime');
+
+    function updateTime() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        currentTimeElement.textContent = "Waktu Submit: " + now.toLocaleTimeString('id-ID', options);
+    }
+    updateTime(); // Panggil pertama kali
+    setInterval(updateTime, 1000); // Update setiap detik (opsional)
+
+    // --- Logic Submit Form ---
     const form = document.getElementById('messageForm');
     const outputDisplay = document.getElementById('outputDisplay');
     const validationError = document.getElementById('validationError');
-
+    
     if (form) {
-        function updateTime() {
-            const now = new Date();
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'shortOffset' };
-            const formattedTime = `Current Time: ${now.toLocaleString('en-US', options)}`;
-            document.getElementById('currentTime').textContent = formattedTime;
-        }
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        updateTime();
-        setInterval(updateTime, 1000); 
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            validationError.textContent = ''; 
-
+            // Ambil semua data
             const nama = document.getElementById('nama').value.trim();
             const tanggalLahirInput = document.getElementById('tanggalLahir').value;
             const jenisKelamin = document.querySelector('input[name="jenisKelamin"]:checked');
             const pesan = document.getElementById('pesan').value.trim();
+
+            // Reset error
+            validationError.textContent = ''; 
 
             // Validasi Sederhana 
             if (!nama || !tanggalLahirInput || !jenisKelamin || !pesan) {
@@ -46,9 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (userNameElement) {
-                 userNameElement.textContent = nama + " "; 
+                userNameElement.textContent = nama + " ";
             }
-            
+
             // Tampilkan Output
             const [year, month, day] = tanggalLahirInput.split('-');
             const tanggalLahirFormatted = `${day}/${month}/${year}`;
@@ -61,10 +90,12 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
 
             outputDisplay.innerHTML = newOutputHTML;
-            alert(`Formulir berhasil disubmit!`);
-
-            form.reset(); 
             
+            console.log(`Formulir berhasil disubmit oleh ${nama}!`);
+
+            form.reset();
+
+            // Set ulang radio button
             if (jenisKelamin) {
                 jenisKelamin.checked = false;
             }
